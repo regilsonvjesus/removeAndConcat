@@ -3,36 +3,54 @@ package exemplos;
 public class ConcatRemove {
 
 	public static void main(String[] args) {
-		System.out.println("oi");
-		String s = "blablablabla";
-		String t = "blablabcde";
-		//8
-		System.out.println(comparaStrings(s,t));
-
+		String s = "aba";
+		String t = "aba";
+		int qtdePermitidas = 7;
+		int qtdeRealizadas = 0;
+		
+		int position = pegarposition(s,t);
+		qtdeRealizadas = s.length()-position;
+		String res = removeChar(s, position);
+		qtdeRealizadas += t.length()-position;
+		res = incrementarChar(t, position, res);
+		System.out.println(res);
+		System.out.println(qtdeRealizadas);
+		if (qtdePermitidas >= qtdeRealizadas)
+			System.out.println("Sim");
+		else 
+			System.out.println("NÃ£o");
+	
 	}
 
-	public static int comparaStrings(String s1, String s2) {
+	public static int pegarposition(String s1, String s2) {
 		int i = 0;
-		/*
-		 * Vai um por um passeando pelos dois vetores
-		 */
 		while ((i < s1.length()) && (i < s2.length())){
 			if (s1.charAt(i) != s2.charAt(i)){
 				return i;
 			}
 			i++;
 		}
-		
-		/*
-		 * Se chegar aqui, ou são iguais ou um é menor que o outro (nesse caso, diferentes)
-		 */
 		if (s1.length() == s2.length()){
-			return -1;
+			return 0;
 		}
-		
-		/*
-		 * Se chegar aqui, um é menor que o outro... "i" conterá o último índice do menor vetor
-		 */
 		return i; 
 	}
+
+	public static String removeChar(String str, int pos) {
+	    if (str.length() == pos)
+	        return str;
+	    else 
+	        return removeChar(str.substring(0, pos) + str.substring(pos + 1), pos);
+	    
+	}
+	
+	public static String incrementarChar(String str, int pos, String res) {
+	    if (pos > str.length()-1)
+	        return res;
+	    else 
+	        return incrementarChar(str, pos+1, res.concat(str.substring(pos, pos+1)));	    
+	}
+	
+
+
 }
